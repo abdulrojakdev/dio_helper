@@ -5,7 +5,7 @@ class APiCertificates {
 
   dynamic? certificates;
 
-  static set certificatesApi(String value) {
+  static set certificatesApi(dynamic value) {
     if (value == instance.certificates) {
       return;
     }
@@ -13,7 +13,7 @@ class APiCertificates {
   }
 
   /// Retrieves the publishable API certificates.
-  static String get certificatesAPI {
+  static String get certificatesApi {
     assert(instance.certificates != null,
     'A publishableCertificates is required and missing');
     return instance.certificates!;
