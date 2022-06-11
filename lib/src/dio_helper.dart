@@ -51,7 +51,7 @@ class DioHelper {
 
       dio = Dio(baseOptions)..interceptors.addAll(logInterceptor());
       
-      if(APiCertificates.certificatesAPI == null || APiCertificates.certificatesAPI == ""){
+      if(APiCertificates.certificatesAPI != null || APiCertificates.certificatesAPI != ""){
         try {
           List<int> bytes = [];
           bytes = (await rootBundle.load(APiCertificates.certificatesAPI))
