@@ -50,21 +50,23 @@ class DioHelper {
       );
 
       dio = Dio(baseOptions)..interceptors.addAll(logInterceptor());
+      
+      if(APiCertificates.certificatesAPI == null || APiCertificates.certificatesAPI == ""){
+        try {
+          List<int> bytes = [];
+          bytes = (await rootBundle.load(APiCertificates.certificatesAPI))
+              .buffer
+              .asUint8List();
 
-      try {
-        List<int> bytes = [];
-        bytes = (await rootBundle.load(APiCertificates.certificatesAPI))
-            .buffer
-            .asUint8List();
-
-        sc.setTrustedCertificatesBytes(bytes);
-      } on TlsException catch (e) {
-        if (e.osError?.message != null &&
-            e.osError!.message.contains('CERT_ALREADY_IN_HASH_TABLE')) {
-          print('createHttpClient() - cert already trusted! Skipping.');
-        } else {
-          print('createHttpClient().setTrustedCertificateBytes EXCEPTION: $e');
-          rethrow;
+          sc.setTrustedCertificatesBytes(bytes);
+        } on TlsException catch (e) {
+          if (e.osError?.message != null &&
+              e.osError!.message.contains('CERT_ALREADY_IN_HASH_TABLE')) {
+            print('createHttpClient() - cert already trusted! Skipping.');
+          } else {
+            print('createHttpClient().setTrustedCertificateBytes EXCEPTION: $e');
+            rethrow;
+          }
         }
       }
 
